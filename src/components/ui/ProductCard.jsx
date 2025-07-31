@@ -17,9 +17,9 @@ const ProductCard = ({ product }) => {
 
       <div className="p-2 cursor-default">
         <p className="text-gray-500 line-clamp-1">{product?.name}</p>
-        <p className="my-3">USD {product?.price}</p>
+        <p className="my-3">GHC {product?.price}</p>
         <Button type="button" onClick={() => addItem(product)}>
-          Buy Item
+          Buy Now
         </Button>
       </div>
     </div>
