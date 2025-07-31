@@ -11,9 +11,6 @@ const HomeNavbar = () => {
 
       {/* Right: Links */}
       <div className="flex items-center gap-6 text-sm">
-        <a href="#overview" className="hover:underline text-gray-800">Overview</a>
-        <a href="#plans" className="hover:underline text-gray-800">Plans</a>
-
         {/* Sign Up Button */}
         <button className="px-4 py-1.5 border border-gray-300 rounded-full text-sm hover:bg-gray-100 transition">
           Sign Up
