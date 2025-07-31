@@ -7,6 +7,7 @@ const RequireAuth = lazy(() => import("./components/RequireAuth"));
 import SuspenseLayout from "./components/SuspenseLayout";
 import { useEffect } from "react";
 import Alert from "./components/ui/Alert";
+import LandingPage from "./pages/LandingPage";
 
 const SignInPage = lazy(() => import("./pages/SignIn"));
 const SignUpPage = lazy(() => import("./pages/SignUp"));
@@ -16,7 +17,7 @@ const CheckoutPage = lazy(() => import("./pages/Checkout"));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SignInPage />,
+    element: <LandingPage />,
     errorElement: <ErrorPage />,
   },
   {

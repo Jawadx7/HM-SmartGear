@@ -138,7 +138,7 @@ const CartDrawer = () => {
 
             {/* Checkout Button */}
             <Button type="button" onClick={() => navigate("checkout")}>
-              Proceed to Checkout - GHC {(getTotalPrice() + 7).toFixed(2)}
+              Proceed to Checkout - GHS {(getTotalPrice() + 7).toFixed(2)}
             </Button>
           </div>
         </>

@@ -40,6 +40,7 @@ const SignIn = () => {
               </a>
             </p>
           </div>
+          <p className="text-gray-600 text-center pt-6"><a href="">Forgot Password?</a></p>
         </div>
 
         <div className="text-center mt-8">
