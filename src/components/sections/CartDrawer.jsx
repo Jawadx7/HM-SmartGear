@@ -32,7 +32,8 @@ const CartDrawer = () => {
       if (!user || user == null) {
         navigate("/signin");
       } else {
-        await handleCheckoutPayment(totalAmount);
+        const result = await handleCheckoutPayment(totalAmount);
+        console.log("Payment result:", result);
       }
 
       // This will redirect to Paystack if successful
