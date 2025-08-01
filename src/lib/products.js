@@ -10,7 +10,7 @@ export const products = [
   {
     id: "1",
     name: "Game Controller",
-    price: 45,
+    price: 1,
     image: controller,
     description: "Wireless Bluetooth controller compatible with all devices.",
   },
