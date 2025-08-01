@@ -26,7 +26,7 @@ const SignInForm = () => {
         setAlert(result.message, "success");
 
         setTimeout(() => {
-          navigate("/products");
+          navigate("/");
         }, 1500);
       } else {
         setAlert(result.message, "error");

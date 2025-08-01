@@ -2,10 +2,13 @@ import { CircleChevronRight, Plus, Minus, X, ShoppingCart } from "lucide-react";
 import { useAppStore, useCartStore } from "../../store/AppStore";
 import Button from "../ui/Button";
 import emptyCart from "../../assets/empty-cart.svg";
-import { paymentService } from "../../services/payment";
+import { handleCheckoutPayment } from "../../services/payment";
+import Spinner from "../ui/Spinner";
+import { useState } from "react";
 
 const CartDrawer = () => {
   const { cartDrawOut, closeCartDrawer } = useAppStore((state) => state);
+  const [loading, setLoading] = useState(false);
   const {
     items,
     reduceItem,
@@ -16,14 +19,16 @@ const CartDrawer = () => {
   } = useCartStore((state) => state);
 
   const makePayment = async () => {
+    setLoading(true);
     try {
-      const result = await paymentService.initiatePayment({
-        amount: getTotalPrice,
-      });
+      const totalAmount = getTotalPrice();
 
-      console.log(result);
+      // This will redirect to Paystack if successful
+      await handleCheckoutPayment(totalAmount);
     } catch (error) {
-      console.log(error);
+      console.error("Checkout failed:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -149,7 +154,7 @@ const CartDrawer = () => {
             </div>
 
             <Button type="button" onClick={makePayment}>
-              Proceed to Payment
+              {loading ? <Spinner /> : <p>Proceed to Payment</p>}
             </Button>
           </div>
         </>

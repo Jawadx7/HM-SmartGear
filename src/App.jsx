@@ -31,11 +31,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <h1>Home Page</h1>,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "products",
     element: (
       <Suspense fallback={<SuspenseLayout />}>
         <RequireAuth />
