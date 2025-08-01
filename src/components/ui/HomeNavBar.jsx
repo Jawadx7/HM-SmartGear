@@ -5,7 +5,7 @@ const HomeNavbar = () => {
     <nav className="w-full px-6 md:px-12 py-4 flex justify-between items-center bg-white shadow-sm">
       {/* Left: Logo */}
       <div className="flex items-center gap-2">
-        <div className="w-6 h-6 bg-black rounded-full" /> {/* Replace with logo image if available */}
+        <div className="w-6 h-6 bg-black rounded-full" />
         <span className="text-lg font-semibold text-gray-900">SmartGear</span>
       </div>
 
