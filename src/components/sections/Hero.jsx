@@ -1,4 +1,5 @@
-import heroImage from "../../assets/hero_pic.jpeg"; // rename your image accordingly
+import heroImage from "../../assets/hero_pic.jpeg";
+import heroImageRotate from "../../assets/hero_pic-rotate.jpeg";
 import { ArrowRight } from "lucide-react";
 
 const HeroSection = () => {
@@ -26,11 +27,16 @@ const HeroSection = () => {
         </div>
 
         {/* Right Image */}
-        <div className="flex-1 w-full max-w-md hidden lg:block">
+        <div className="flex-1 w-full max-w-md">
           <img
             src={heroImage}
             alt="SmartGear Hero"
-            className="w-[70%] h-auto rounded-2xl shadow-xl object-cover"
+            className="w-[70%] h-auto rounded-2xl shadow-xl object-cover hidden md:block"
+          />
+          <img
+            src={heroImageRotate}
+            alt="SmartGear Hero"
+            className="w-full h-auto rounded-2xl shadow-xl object-cover block md:hidden"
           />
         </div>
       </div>
