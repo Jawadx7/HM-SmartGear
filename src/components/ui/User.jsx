@@ -2,31 +2,27 @@ import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, LogOut } from "lucide-react";
 import { authService } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
-
-const user = {
-  name: "James McCoy",
-  email: "james-mc@gmail.com",
-};
+import useGetAuthData from "../../hooks/useGetAuthData";
 
 const User = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { user: authUser } = useGetAuthData();
+  const navigate = useNavigate();
 
-  // Close dropdown when clicking outside
+  // Close dropdown on click outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const getInitials = (name) => {
+    if (!name) return "U";
     return name
       .split(" ")
       .map((word) => word[0])
@@ -35,19 +31,25 @@ const User = () => {
       .slice(0, 2);
   };
 
-  const navigate = useNavigate();
-
   const handleLogout = async () => {
     try {
       await authService.signout();
-
-      setTimeout(() => {
-        navigate("/signin");
-      }, 1500);
+      setTimeout(() => navigate("/signin"), 1500);
     } catch (error) {
-      console.log(error);
+      console.error("Logout failed:", error);
     }
   };
+
+  if (!authUser) {
+    return (
+      <a
+        href="/signin"
+        className="inline-block bg-gray-900 hover:bg-gray-800 text-white font-semibold py-2 px-6 rounded-md transition duration-300 ease-in-out text-sm sm:text-base"
+      >
+        Sign In
+      </a>
+    );
+  }
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -56,10 +58,8 @@ const User = () => {
         className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
       >
         {/* Avatar */}
-        <div className="relative">
-          <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-semibold">
-            {getInitials(user.name)}
-          </div>
+        <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-semibold">
+          {getInitials(authUser.first_name || authUser.username || "User")}
         </div>
 
         {/* Dropdown Arrow */}
@@ -76,10 +76,13 @@ const User = () => {
           <div className="px-4 py-3 border-b border-gray-100">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
-                {getInitials(user.name)}
+                {getInitials(authUser.first_name || authUser.username || "U")}
               </div>
               <div>
-                <p className="text-sm text-gray-500">{user.email}</p>
+                <p className="text-sm font-medium text-gray-900">
+                  {authUser.first_name || authUser.username}
+                </p>
+                <p className="text-xs text-gray-500">{authUser.email}</p>
               </div>
             </div>
           </div>

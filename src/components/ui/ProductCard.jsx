@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
   const { addItem } = useCartStore((state) => state);
   return (
     <div className="hover:shadow-lg rounded-lg group overflow-hidden">
-      <div className="w-full h-[12rem] sm:h-[18rem] relative overflow-hidden flex items-center justify-center bg-gray-300 z-[-10]">
+      <div className="w-full h-[10rem] sm:h-[18rem] relative overflow-hidden flex items-center justify-center bg-gray-300 z-[-10]">
         <img
           src={product?.image}
           alt=""
@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
 
       <div className="p-2 cursor-default">
         <p className="text-gray-500 line-clamp-1">{product?.name}</p>
-        <p className="my-3">USD {product?.price}</p>
+        <p className="my-1 sm:my-3">GHC {product?.price}</p>
         <Button type="button" onClick={() => addItem(product)}>
           Buy Item
         </Button>

@@ -5,6 +5,8 @@ import emptyCart from "../../assets/empty-cart.svg";
 import { handleCheckoutPayment } from "../../services/payment";
 import Spinner from "../ui/Spinner";
 import { useState } from "react";
+import useGetAuthData from "../../hooks/useGetAuthData";
+import { useNavigate } from "react-router-dom";
 
 const CartDrawer = () => {
   const { cartDrawOut, closeCartDrawer } = useAppStore((state) => state);
@@ -18,13 +20,22 @@ const CartDrawer = () => {
     getTotalPrice,
   } = useCartStore((state) => state);
 
+  const { user } = useGetAuthData();
+  const navigate = useNavigate();
+
   const makePayment = async () => {
     setLoading(true);
+
     try {
       const totalAmount = getTotalPrice();
 
+      if (!user || user == null) {
+        navigate("/signin");
+      } else {
+        await handleCheckoutPayment(totalAmount);
+      }
+
       // This will redirect to Paystack if successful
-      await handleCheckoutPayment(totalAmount);
     } catch (error) {
       console.error("Checkout failed:", error);
     } finally {

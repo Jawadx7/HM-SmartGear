@@ -1,16 +1,6 @@
-import { Outlet, Navigate, useLocation } from "react-router-dom";
-import useGetAuthData from "../hooks/useGetAuthData";
+import { Outlet, Navigate } from "react-router-dom";
 
 const RequireAuth = () => {
-  const location = useLocation();
-  const { user } = useGetAuthData();
-
-  return user ? (
-    <>
-      <Outlet />
-    </>
-  ) : (
-    <Navigate to="/signin" state={{ from: location }} replace />
-  );
+  return <Outlet />;
 };
 export default RequireAuth;
