@@ -51,6 +51,7 @@ const SignUpForm = () => {
 
   return (
     <form className="space-y-6" onSubmit={handleSignUp}>
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
       <Input
         label={"First Name"}
         value={formData.first_name}
@@ -65,6 +66,9 @@ const SignUpForm = () => {
         setValue={handleValue}
         type={"text"}
       />
+      {/* </div> */}
+
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
       <Input
         label={"Username"}
         value={formData.username}
@@ -79,6 +83,8 @@ const SignUpForm = () => {
         setValue={handleValue}
         type={"email"}
       />
+      {/* </div> */}
+
       <Input
         label={"Password"}
         value={formData.password}

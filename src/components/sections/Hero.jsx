@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="bg-white min-h-screen flex items-center justify-center px-6 py-12">
+    <section className="bg-white h-fit lg:h-screen flex items-center justify-center px-6 pb-14 pt-32 lg:py-12">
       <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12">
         {/* Left Text */}
         <div className="text-center md:text-left flex-1">
@@ -26,7 +26,7 @@ const HeroSection = () => {
         </div>
 
         {/* Right Image */}
-        <div className="flex-1 w-full max-w-md">
+        <div className="flex-1 w-full max-w-md hidden lg:block">
           <img
             src={heroImage}
             alt="SmartGear Hero"
