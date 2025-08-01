@@ -13,48 +13,51 @@ const AboutUs = () => {
             <div>
               <h3 className="font-semibold mb-3">About the Marketplace</h3>
               <p>
-                Welcome to DeStore, the online hub designed to help small
-                businesses showcase their products and reach customers. Whether
-                you&apos;re a local artisan, a home-based entrepreneur, or a
-                growing brand, our platform provides a simple and effective way
-                to open your own digital store.
+                Welcome to SmartGear, your premier destination for cutting-edge
+                electronics and smart technology. We specialize in bringing you
+                the latest innovations in consumer electronics, from smartphones
+                and laptops to smart home devices and gaming gear.
               </p>
               <p className="my-4">
-                By giving sellers a dedicated space to present their products,
-                we make it easier for customers to discover unique items while
-                supporting small businesses.
+                Our carefully curated selection features top brands alongside
+                emerging tech companies, ensuring you have access to both
+                trusted favorites and exciting new products that push the
+                boundaries of technology.
               </p>
               <p>
-                Our marketplace is tailored to be user-friendly, offering all
-                the tools sellers need to succeed, and ensuring that buyers
-                enjoy a smooth and secure shopping experience.
+                At SmartGear, we're committed to providing detailed product
+                information, competitive prices, and exceptional customer
+                service to help you make informed decisions about your tech
+                purchases.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold">For Sellers</h3>
+              <h3 className="font-semibold">Product Quality</h3>
               <p>
-                Selling on DeStore is designed to be as simple as possible. Once
-                you register, you&apos;ll have access to a personalized store
-                page where you can list products, set prices, and manage orders
-                effortlessly.
+                Every product at SmartGear undergoes rigorous quality checks to
+                ensure you receive only authentic, high-performance electronics.
+                We partner directly with manufacturers and authorized
+                distributors to guarantee genuineness and warranty coverage.
               </p>
               <p className="mt-3">
-                With our platform, you won&apos;t need to worry about building a
-                website from scratch or dealing with technical headaches. We
-                have done that for you.
+                From the latest flagship smartphones to professional-grade audio
+                equipment, we maintain strict standards to deliver products that
+                meet your expectations for performance, durability, and
+                innovation.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold">For Buyers</h3>
+              <h3 className="font-semibold">Customer Experience</h3>
               <p>
-                At DeStore shopping is more than just a transaction. We give you
-                access to one-of-a-kind products from independent sellers who
-                bring creativity and passion to every item they offer.
+                Shopping at SmartGear means accessing expert product reviews,
+                detailed specifications, and comparison tools to help you choose
+                the perfect electronics for your needs and budget.
               </p>
               <p className="mt-3">
-                Browse through a variety of categories, from fashion to home
-                decor, and find something special that you won&apos;t see
-                anywhere else.
+                Enjoy fast shipping, secure checkout, comprehensive warranties,
+                and responsive customer support. Plus, stay updated with the
+                latest tech trends through our product guides and technology
+                insights.
               </p>
             </div>
           </div>

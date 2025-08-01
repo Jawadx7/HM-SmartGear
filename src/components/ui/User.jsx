@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, LogOut } from "lucide-react";
+import { authService } from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 
 const user = {
   name: "James McCoy",
@@ -33,15 +35,15 @@ const User = () => {
       .slice(0, 2);
   };
 
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-          setIsOpen(false);
-          console.log("User logged out");
-        }, 2000);
-      });
+      await authService.signout();
+
+      setTimeout(() => {
+        navigate("/signin");
+      }, 1500);
     } catch (error) {
       console.log(error);
     }

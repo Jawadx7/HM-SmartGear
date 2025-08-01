@@ -10,18 +10,28 @@ import Alert from "./components/ui/Alert";
 
 const SignInPage = lazy(() => import("./pages/SignIn"));
 const SignUpPage = lazy(() => import("./pages/SignUp"));
+const SuccessPage = lazy(() => import("./pages/Success"));
 const ProductsPage = lazy(() => import("./pages/Products"));
-const CheckoutPage = lazy(() => import("./pages/Checkout"));
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/signin",
     element: <SignInPage />,
     errorElement: <ErrorPage />,
   },
   {
     path: "/signup",
     element: <SignUpPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/payment/success",
+    element: <SuccessPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/",
+    element: <h1>Home Page</h1>,
     errorElement: <ErrorPage />,
   },
   {
@@ -38,14 +48,6 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<SuspenseLayout />}>
             <ProductsPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: "checkout",
-        element: (
-          <Suspense fallback={<SuspenseLayout />}>
-            <CheckoutPage />
           </Suspense>
         ),
       },

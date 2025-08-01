@@ -34,22 +34,4 @@ export const products = [
     price: 30,
     image: headset,
   },
-  {
-    id: "6",
-    name: "Ear Buds",
-    price: 30,
-    image: earbuds,
-  },
-  {
-    id: "7",
-    name: "Game Control",
-    price: 30,
-    image: controller,
-  },
-  {
-    id: "8",
-    name: "Camera",
-    price: 30,
-    image: camera,
-  },
 ];

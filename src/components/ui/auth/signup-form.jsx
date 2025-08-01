@@ -4,13 +4,16 @@ import Button from "../Button";
 import Spinner from "../Spinner";
 import { useAppStore } from "../../../store/AppStore";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../../../services/auth";
 
 const SignUpForm = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirm_password: "",
+    username: "",
+    first_name: "",
+    last_name: "",
   });
 
   const navigate = useNavigate();
@@ -27,30 +30,20 @@ const SignUpForm = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (formData.password.trim() !== formData.confirm_password.trim()) {
-      setLoading(false);
-      setAlert("Passwords do not match. Please try again.", "warning");
-      return;
-    }
-
     try {
-      await new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-          console.log(formData);
+      const result = await authService.register(formData);
 
-          const user = { email: formData.email };
-          const accessToken = "7377373";
-
-          sessionStorage.setItem("auth", JSON.stringify({ user, accessToken }));
-          setAlert("Form data logged", "success");
-
-          navigate("/products", { replace: true });
-        }, 2000);
-      });
+      if (result.success) {
+        setAlert(result.message, "success");
+        navigate("/signin");
+      } else {
+        setAlert(result.message, "error");
+      }
     } catch (error) {
-      console.log(error);
-      setAlert("We couldn't sign you in", "error");
+      setAlert(
+        error.message || "An unexpected error occurred. Please try again.",
+        "error"
+      );
     } finally {
       setLoading(false);
     }
@@ -58,6 +51,27 @@ const SignUpForm = () => {
 
   return (
     <form className="space-y-6" onSubmit={handleSignUp}>
+      <Input
+        label={"First Name"}
+        value={formData.first_name}
+        name="first_name"
+        setValue={handleValue}
+        type={"text"}
+      />
+      <Input
+        label={"Last Name"}
+        value={formData.last_name}
+        name="last_name"
+        setValue={handleValue}
+        type={"text"}
+      />
+      <Input
+        label={"Username"}
+        value={formData.username}
+        name="username"
+        setValue={handleValue}
+        type={"text"}
+      />
       <Input
         label={"Email"}
         value={formData.email}
@@ -72,14 +86,6 @@ const SignUpForm = () => {
         name="password"
         type={"password"}
       />
-      <Input
-        label={"Confirm Password"}
-        value={formData.confirm_password}
-        name="confirm_password"
-        setValue={handleValue}
-        type={"password"}
-      />
-
       <Button type={"submit"} disabled={loading}>
         {loading ? (
           <div className="flex gap-x-5 justify-center items-center">

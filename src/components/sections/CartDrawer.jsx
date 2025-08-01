@@ -2,7 +2,7 @@ import { CircleChevronRight, Plus, Minus, X, ShoppingCart } from "lucide-react";
 import { useAppStore, useCartStore } from "../../store/AppStore";
 import Button from "../ui/Button";
 import emptyCart from "../../assets/empty-cart.svg";
-import { useNavigate } from "react-router-dom";
+import { paymentService } from "../../services/payment";
 
 const CartDrawer = () => {
   const { cartDrawOut, closeCartDrawer } = useAppStore((state) => state);
@@ -15,7 +15,17 @@ const CartDrawer = () => {
     getTotalPrice,
   } = useCartStore((state) => state);
 
-  const navigate = useNavigate();
+  const makePayment = async () => {
+    try {
+      const result = await paymentService.initiatePayment({
+        amount: getTotalPrice,
+      });
+
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div
@@ -23,7 +33,6 @@ const CartDrawer = () => {
         cartDrawOut ? "right-0" : "right-[-100%]"
       } transition-all duration-300 ease-in-out`}
     >
-      {/* Header */}
       <div className="p-5 border-b border-gray-200 flex items-center justify-between">
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <ShoppingCart size={24} />
@@ -38,75 +47,78 @@ const CartDrawer = () => {
 
       {items.length > 0 ? (
         <>
-          {/* Scrollable Cart Items */}
           <div className="flex-1 overflow-y-auto p-5">
             <div className="space-y-4">
-              {items.map((cartItem) => (
-                <div
-                  className="relative w-full flex items-start space-x-4 p-4 border border-gray-200 rounded-lg"
-                  key={cartItem?.id}
-                >
-                  {/* Product Image */}
-                  <div className="relative w-20 h-20 overflow-hidden flex-shrink-0">
-                    <img
-                      src={cartItem?.image}
-                      alt={cartItem?.name + "-image"}
-                      className="h-full w-full object-cover rounded-md"
-                    />
-                  </div>
-
-                  {/* Product Details */}
-                  <div className="flex-1 flex flex-col gap-2">
-                    {/* Name and Remove Button */}
-                    <div className="flex items-start justify-between">
-                      <h3 className="text-lg font-semibold line-clamp-2">
-                        {cartItem?.name}
-                      </h3>
-                      <Button
-                        type="button"
-                        className="bg-red-500 hover:bg-red-600 text-white rounded-md p-1 ml-2 flex-shrink-0"
-                        onClick={() => removeItem(cartItem?.id)}
-                      >
-                        <X size={16} />
-                      </Button>
+              {items
+                .slice()
+                .reverse()
+                .map((cartItem) => (
+                  <div
+                    className="relative w-full flex items-start space-x-4 p-4 border border-gray-200 rounded-lg"
+                    key={cartItem?.id}
+                  >
+                    {/* Product Image */}
+                    <div className="relative w-20 h-20 overflow-hidden flex-shrink-0">
+                      <img
+                        src={cartItem?.image}
+                        alt={cartItem?.name + "-image"}
+                        className="h-full w-full object-cover rounded-md"
+                      />
                     </div>
 
-                    {/* Description */}
-                    <p className="text-gray-600 text-sm line-clamp-2">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Eius, vitae!
-                    </p>
-
-                    {/* Price and Quantity Controls */}
-                    <div className="flex items-center justify-between mt-2">
-                      <div className="text-lg font-bold text-green-600">
-                        GHC {(cartItem?.price * cartItem?.quantity).toFixed(2)}
+                    {/* Product Details */}
+                    <div className="flex-1 flex flex-col gap-2">
+                      {/* Name and Remove Button */}
+                      <div className="flex items-start justify-between">
+                        <h3 className="text-lg font-semibold line-clamp-2">
+                          {cartItem?.name}
+                        </h3>
+                        <Button
+                          type="button"
+                          className="bg-red-500 hover:bg-red-600 text-white rounded-md p-1 ml-2 flex-shrink-0"
+                          onClick={() => removeItem(cartItem?.id)}
+                        >
+                          <X size={16} />
+                        </Button>
                       </div>
 
-                      {/* Quantity Controls */}
-                      <div className="flex items-center space-x-2 border border-gray-300 rounded-lg">
-                        <Button
-                          type="button"
-                          onClick={() => reduceItem(cartItem)}
-                          className="p-2 hover:bg-gray-100 rounded-l-lg"
-                        >
-                          <Minus size={16} />
-                        </Button>
-                        <span className="px-3 py-2 font-semibold min-w-[40px] text-center">
-                          {cartItem?.quantity}
-                        </span>
-                        <Button
-                          type="button"
-                          onClick={() => addItem(cartItem)}
-                          className="p-2 hover:bg-gray-100 rounded-r-lg"
-                        >
-                          <Plus size={16} />
-                        </Button>
+                      {/* Description */}
+                      <p className="text-gray-600 text-sm line-clamp-2">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Eius, vitae!
+                      </p>
+
+                      {/* Price and Quantity Controls */}
+                      <div className="flex items-center justify-between mt-2">
+                        <div className="text-lg font-bold text-green-600">
+                          GHC{" "}
+                          {(cartItem?.price * cartItem?.quantity).toFixed(2)}
+                        </div>
+
+                        {/* Quantity Controls */}
+                        <div className="flex items-center space-x-2 border border-gray-300 rounded-lg">
+                          <Button
+                            type="button"
+                            onClick={() => reduceItem(cartItem)}
+                            className="p-2 hover:bg-gray-100 rounded-l-lg"
+                          >
+                            <Minus size={16} />
+                          </Button>
+                          <span className="px-3 py-2 font-semibold min-w-[40px] text-center">
+                            {cartItem?.quantity}
+                          </span>
+                          <Button
+                            type="button"
+                            onClick={() => addItem(cartItem)}
+                            className="p-2 hover:bg-gray-100 rounded-r-lg"
+                          >
+                            <Plus size={16} />
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
 
@@ -136,9 +148,8 @@ const CartDrawer = () => {
               </div>
             </div>
 
-            {/* Checkout Button */}
-            <Button type="button" onClick={() => navigate("checkout")}>
-              Proceed to Checkout - GHC {(getTotalPrice() + 7).toFixed(2)}
+            <Button type="button" onClick={makePayment}>
+              Proceed to Payment
             </Button>
           </div>
         </>

@@ -4,40 +4,38 @@ import Button from "../Button";
 import Spinner from "../Spinner";
 import { useAppStore } from "../../../store/AppStore";
 import { useNavigate } from "react-router-dom";
+import { authService } from "../../../services/auth";
 
 const SignInForm = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { setAlert } = useAppStore((state) => state);
+  const setAlert = useAppStore((state) => state.setAlert);
 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     try {
-      await new Promise((resolve) => {
+      const result = await authService.signin({ username, password });
+
+      if (result.success) {
+        setAlert(result.message, "success");
+
         setTimeout(() => {
-          resolve();
-          console.log(email, password);
-          setAlert("Form data logged", "success");
-
-          const user = { email };
-          const accessToken = "7377373";
-
-          sessionStorage.setItem("auth", JSON.stringify({ user, accessToken }));
-          setAlert("Form data logged", "success");
-
-          navigate("/products", { replace: true });
-        }, 2000);
-      });
+          navigate("/products");
+        }, 1500);
+      } else {
+        setAlert(result.message, "error");
+      }
     } catch (error) {
-      console.log(error);
-      setAlert("We couldn't sign you in", "error");
+      setAlert(
+        error.message || "An unexpected error occurred. Please try again.",
+        "error"
+      );
     } finally {
       setLoading(false);
     }
@@ -46,11 +44,11 @@ const SignInForm = () => {
   return (
     <form className="space-y-6" onSubmit={handleLogin}>
       <Input
-        label={"Email"}
-        value={email}
-        name={"email"}
-        setValue={(e) => setEmail(e.target.value)}
-        type={"email"}
+        label={"Username"}
+        value={username}
+        name={"username"}
+        setValue={(e) => setUsername(e.target.value)}
+        type={"text"}
       />
       <Input
         label={"Password"}
