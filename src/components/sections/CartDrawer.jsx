@@ -2,11 +2,11 @@ import { CircleChevronRight, Plus, Minus, X, ShoppingCart } from "lucide-react";
 import { useAppStore, useCartStore } from "../../store/AppStore";
 import Button from "../ui/Button";
 import emptyCart from "../../assets/empty-cart.svg";
-import { handleCheckoutPayment } from "../../services/payment";
 import Spinner from "../ui/Spinner";
 import { useState } from "react";
 import useGetAuthData from "../../hooks/useGetAuthData";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
 
 const CartDrawer = () => {
   const { cartDrawOut, closeCartDrawer } = useAppStore((state) => state);
@@ -22,6 +22,7 @@ const CartDrawer = () => {
 
   const { user } = useGetAuthData();
   const navigate = useNavigate();
+  const setAlert = useAppStore((state) => state.setAlert);
 
   const makePayment = async () => {
     setLoading(true);
@@ -32,11 +33,26 @@ const CartDrawer = () => {
       if (!user || user == null) {
         navigate("/signin");
       } else {
-        const result = await handleCheckoutPayment(totalAmount);
-        console.log("Payment result:", result);
-      }
+        console.log(
+          JSON.stringify({ total_price: totalAmount, email: user.email })
+        );
 
-      // This will redirect to Paystack if successful
+        const result = await api.post("/payment/initiate/", {
+          total_price: totalAmount,
+          email: user.email,
+        });
+
+        console.log("Payment result:", result);
+
+        const data = result.data;
+
+        if (result.status === 200 && data.authorization_url) {
+          window.location.href = data.authorization_url;
+        } else {
+          console.error("Payment initiation failed:", data);
+          setAlert("Failed to initiate payment. Please try again.", "error");
+        }
+      }
     } catch (error) {
       console.error("Checkout failed:", error);
     } finally {
@@ -101,8 +117,7 @@ const CartDrawer = () => {
 
                       {/* Description */}
                       <p className="text-gray-600 text-sm line-clamp-2">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Eius, vitae!
+                        {cartItem?.description}
                       </p>
 
                       {/* Price and Quantity Controls */}

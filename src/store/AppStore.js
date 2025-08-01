@@ -120,8 +120,7 @@ export const useCartStore = create(
       },
     }),
     {
-      name: "smartgear_cart", // localStorage key
-      // Optional: customize what gets persisted
+      name: "smartgear_cart",
       partialize: (state) => ({
         items: state.items,
         isCheckoutComplete: state.isCheckoutComplete,

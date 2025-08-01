@@ -59,7 +59,7 @@ const User = () => {
       >
         {/* Avatar */}
         <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-semibold">
-          {getInitials(authUser.first_name || authUser.username || "User")}
+          {getInitials("User")}
         </div>
 
         {/* Dropdown Arrow */}
@@ -74,6 +74,12 @@ const User = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
           <div className="py-1">
+            {/* User Info */}
+            <div className="px-4 py-2 text-sm text-gray-700">
+              <div className="text-gray-500 text-lg font-semibold">
+                {authUser.email}
+              </div>
+            </div>
             <button
               onClick={handleLogout}
               className="w-full px-4 py-2 text-left flex items-center space-x-3 hover:bg-red-50 transition-colors text-red-600"

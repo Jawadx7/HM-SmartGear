@@ -73,7 +73,6 @@ export const authService = {
           const tokenPayload = JSON.parse(atob(access.split(".")[1]));
           userData = {
             user_id: tokenPayload.user_id,
-            username: tokenPayload.username,
             email: tokenPayload.email,
           };
         } catch (decodeError) {
