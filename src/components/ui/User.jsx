@@ -55,7 +55,7 @@ const User = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2"
+        className="flex items-center space-x-2 p-2 rounded-lg transition-colors focus:outline-none focus:ring-1 focus:ring-white focus:ring-offset-2"
       >
         {/* Avatar */}
         <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-semibold">
@@ -73,20 +73,6 @@ const User = () => {
       {/* Dropdown Menu */}
       {isOpen && (
         <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-          <div className="px-4 py-3 border-b border-gray-100">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
-                {getInitials(authUser.first_name || authUser.username || "U")}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-gray-900">
-                  {authUser.first_name || authUser.username}
-                </p>
-                <p className="text-xs text-gray-500">{authUser.email}</p>
-              </div>
-            </div>
-          </div>
-
           <div className="py-1">
             <button
               onClick={handleLogout}

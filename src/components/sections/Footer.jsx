@@ -1,3 +1,5 @@
+import logo from "../../assets/logo.png";
+
 const Footer = () => {
   const categories = ["Cooking", "Gym"];
 
@@ -50,7 +52,7 @@ const Footer = () => {
       <div>
         <div className="flex align-center space-x-4">
           {/* <Image src={logo} alt="logo" /> */}
-          <h3 className="text-[1.7rem]">SmartGear</h3>
+          <img src={logo} alt="logo" className="w-[30%]" />
           {/* <Logo /> */}
         </div>
 

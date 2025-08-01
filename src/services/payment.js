@@ -126,7 +126,6 @@ export const initiatePayment = async (amount) => {
   }
 };
 
-// Wrapper function for easy checkout
 export const handleCheckoutPayment = async (totalAmount) => {
   try {
     const paymentResponse = await initiatePayment(totalAmount);
@@ -134,6 +133,8 @@ export const handleCheckoutPayment = async (totalAmount) => {
     if (paymentResponse.status === "success") {
       // Redirect to Paystack payment page
       window.location.href = paymentResponse.data.authorization_url;
+
+      console.log(paymentResponse);
     } else {
       throw new Error(
         paymentResponse.message || "Payment initialization failed"
